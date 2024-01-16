@@ -11,7 +11,9 @@ namespace MagicVilla_API.Datos
         
         }
         public DbSet<Villa> Villas { get; set; }
+        public DbSet<NumeroVilla> NumeroVillas { get; set; }
 
+        //agregar datos por defecto recien carga la aplicacion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Villa>().HasData(
