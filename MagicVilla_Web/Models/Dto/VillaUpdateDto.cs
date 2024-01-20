@@ -6,11 +6,11 @@ namespace MagicVilla_Web.Models.Dto
     {
         [Required]
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Nombre es Requerido")]
         [MaxLength(30)]
         public string Nombre { get; set; }
         public string Detalle { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Tarifa es Requerido")]
         public Double Tarifa { get; set; }
         [Required]
         public int Ocupantes { get; set; }

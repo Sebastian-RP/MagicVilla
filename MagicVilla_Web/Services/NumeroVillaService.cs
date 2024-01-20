@@ -5,33 +5,33 @@ using MagicVilla_Web.Services.IServices;
 
 namespace MagicVilla_Web.Services
 {
-    public class VillaService : BaseService, IVillaService
+    public class NumeroVillaService : BaseService, INumeroVillaService
     {
         public readonly IHttpClientFactory _httpClient;
         private string _villaUrl;
-        public VillaService(IHttpClientFactory httpClient, IConfiguration configuracion) : base(httpClient)
+        public NumeroVillaService(IHttpClientFactory httpClient, IConfiguration configuracion) : base(httpClient)
         {
             _httpClient = httpClient;
             _villaUrl = configuracion.GetValue<string>("SeviceUrls:API_URL");
         }
 
-        public Task<T> Actualizar<T>(VillaUpdateDto dto)
+        public Task<T> Actualizar<T>(NumeroVillaUpdateDto dto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 APITipo = DS.APITipo.PUT,
                 Datos = dto,
-                Url = _villaUrl+"/api/Villa/"+dto.Id
+                Url = _villaUrl+"/api/NumeroVilla/"+dto.VillaNo
             });
         }
 
-        public Task<T> Crear<T>(VillaCreateDto dto)
+        public Task<T> Crear<T>(NumeroVillaCreateDto dto)
         {
             return SendAsync<T>(new APIRequest()
             {
                 APITipo = DS.APITipo.POST,
                 Datos = dto,
-                Url = _villaUrl + "/api/Villa"
+                Url = _villaUrl + "/api/NumeroVilla"
             });
         }
 
@@ -40,7 +40,7 @@ namespace MagicVilla_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 APITipo = DS.APITipo.GET,
-                Url = _villaUrl+"/api/Villa/"+id
+                Url = _villaUrl+"/api/NumeroVilla/"+id
             });
         }
 
@@ -49,7 +49,7 @@ namespace MagicVilla_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 APITipo = DS.APITipo.GET,
-                Url = _villaUrl + "/api/Villa"
+                Url = _villaUrl + "/api/NumeroVilla"
             });
         }
 
@@ -58,7 +58,7 @@ namespace MagicVilla_Web.Services
             return SendAsync<T>(new APIRequest()
             {
                 APITipo = DS.APITipo.DELETE,
-                Url = _villaUrl + "/api/Villa/" + id
+                Url = _villaUrl + "/api/NumeroVilla/" + id
             });
         }
     }
