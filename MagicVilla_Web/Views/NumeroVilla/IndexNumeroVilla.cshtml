@@ -33,10 +33,10 @@
                     <td>@item.Villa.Nombre</td>
                     <td>@item.VillaNo</td>
                     <td>
-                        <a asp-controller="Villa" asp-action="ActualizarNumeroVilla" asp-route-villaNo="@item.VillaNo" class="btn btn-success">
+                        <a asp-controller="NumeroVilla" asp-action="ActualizarNumeroVilla" asp-route-villaNo="@item.VillaNo" class="btn btn-success">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a asp-controller="Villa" asp-action="RemoverNumeroVilla" asp-route-villaNo="@item.VillaNo" class="btn btn-danger">
+                        <a asp-controller="NumeroVilla" asp-action="RemoverNumeroVilla" asp-route-villaNo="@item.VillaNo" class="btn btn-danger">
                             <i class="bi bi-trash-fill"></i>
                         </a>
                     </td>
