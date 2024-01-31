@@ -10,10 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-namespace MagicVilla_API.Controllers
+namespace MagicVilla_API.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class VillaController : ControllerBase
     {
         private readonly ILogger<VillaController> _logger;
@@ -25,8 +26,8 @@ namespace MagicVilla_API.Controllers
             ILogger<VillaController> logger,
             IVillaRepositorio villaRepo,
             IMapper mapper
-            ) 
-        { 
+            )
+        {
             _logger = logger;
             _villaRepo = villaRepo;
             _mapper = mapper;
@@ -65,7 +66,7 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> GetVilla(int id) 
+        public async Task<ActionResult<APIResponse>> GetVilla(int id)
         {
             try
             {
@@ -77,7 +78,7 @@ namespace MagicVilla_API.Controllers
                 }
 
                 //var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
-                var villa = await _villaRepo.Obtener(v => v.Id == id); 
+                var villa = await _villaRepo.Obtener(v => v.Id == id);
 
                 if (villa == null)
                 {
@@ -147,7 +148,7 @@ namespace MagicVilla_API.Controllers
                 await _villaRepo.Crear(modelo);
                 _response.Resultado = modelo;
                 _response.statusCode = HttpStatusCode.Created;
-                
+
                 return CreatedAtRoute("GetVilla", new { id = modelo.Id }, _response);
             }
             catch (Exception ex)
@@ -189,7 +190,7 @@ namespace MagicVilla_API.Controllers
 
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.IsExitoso = false;
                 _response.ErrorMessage = new List<string>() { ex.ToString() };

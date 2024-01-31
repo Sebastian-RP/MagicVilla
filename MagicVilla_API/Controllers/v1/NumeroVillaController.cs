@@ -11,10 +11,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Net;
 
-namespace MagicVilla_API.Controllers
+namespace MagicVilla_API.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class NumeroVillaController : ControllerBase
     {
         private readonly ILogger<NumeroVillaController> _logger;
@@ -28,15 +29,14 @@ namespace MagicVilla_API.Controllers
             IVillaRepositorio villaRepo,
             INumeroVillaRepositorio numeroRepo,
             IMapper mapper
-            ) 
-        { 
+            )
+        {
             _logger = logger;
             _villaRepo = villaRepo;
             _numeroRepo = numeroRepo;
             _mapper = mapper;
             _response = new();
         }
-
 
         [HttpGet]
         [Authorize]
@@ -68,7 +68,7 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> GetNumeroVilla(int id) 
+        public async Task<ActionResult<APIResponse>> GetNumeroVilla(int id)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace MagicVilla_API.Controllers
                 }
 
                 //var villa = VillaStore.villaList.FirstOrDefault(v => v.Id == id);
-                var numeroVilla = await _numeroRepo.Obtener(v => v.VillaNo == id, incluirPropiedades: "Villa"); 
+                var numeroVilla = await _numeroRepo.Obtener(v => v.VillaNo == id, incluirPropiedades: "Villa");
 
                 if (numeroVilla == null)
                 {
@@ -156,7 +156,7 @@ namespace MagicVilla_API.Controllers
                 await _numeroRepo.Crear(modelo);
                 _response.Resultado = modelo;
                 _response.statusCode = HttpStatusCode.Created;
-                
+
                 return CreatedAtRoute("GetNumeroVilla", new { id = modelo.VillaNo }, _response);
             }
             catch (Exception ex)
@@ -198,7 +198,7 @@ namespace MagicVilla_API.Controllers
 
                 return Ok(_response);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _response.IsExitoso = false;
                 _response.ErrorMessage = new List<string>() { ex.ToString() };
